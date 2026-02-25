@@ -8,35 +8,42 @@ public class ToDo {
     private String fechaLimite; // YYYY-MM-DD
     private boolean completado;
 
-    private ToDo(){
+    public ToDo(){
 
     }
 
-    private String getNombre(){
+    public ToDo(String n, String fL){
+        this.nombre = n;
+        this.fechaLimite=fL;
+        this.completado=false;
+        this.descripcion="";
+    }
+
+    public String getNombre(){
         return nombre;
     }
-    private void setNombre(String n){
+    public void setNombre(String n){
         this.nombre = n;
     }
 
-    private String getDescripcion(){
+    public String getDescripcion(){
         return descripcion;
     }
-    private void setDescripcion(String d){
+    public void setDescripcion(String d){
         this.descripcion = d;
     }
 
-    private String getFechaLimite(){
+    public String getFechaLimite(){
         return fechaLimite;
     }
-    private void setFechaLimite(String f){
+    public void setFechaLimite(String f){
         this.fechaLimite=f;
     }
 
-    private boolean isCompeltado(){
+    public boolean isCompeltado(){
         return completado;
     }
-    private void setCompletado(boolean c){
+    public void setCompletado(boolean c){
         this.completado=c;
     }
 }
