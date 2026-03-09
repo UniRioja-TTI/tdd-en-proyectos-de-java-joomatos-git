@@ -1,25 +1,44 @@
 package com.tt1.test;
-
+import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 public class DBStub {
-    private static List<ToDo> toDo;
-    private static List<String> contactos;
 
-    public static void createTarea(){
-        throw new UnsupportedOperationException("Clase aún no implementada.");
+    private Map<String, ToDo> tareas = new HashMap<>();
+    private List<String> mails = new ArrayList<>();
+
+    public boolean createTarea(ToDo todo) {
+        if (todo == null || todo.getNombre() == null) return false;
+        tareas.put(todo.getNombre(), todo);
+        return true;
     }
 
-    public static void readTarea(){
-        throw new UnsupportedOperationException("Clase aún no implementada.");
+    public ToDo getTarea(String nombre) {
+        return tareas.get(nombre);
     }
 
-    public static void updateTarea(){
-        throw new UnsupportedOperationException("Clase aún no implementada.");
+    public List<ToDo> listTareas() {
+        return new ArrayList<>(tareas.values());
     }
 
-    public static void deleteTarea(String n){
-        throw new UnsupportedOperationException("Clase aún no implementada.");
+    public boolean updateTarea(ToDo todo) {
+        if (!tareas.containsKey(todo.getNombre())) return false;
+        tareas.put(todo.getNombre(), todo);
+        return true;
     }
 
+    public boolean deleteTodo(String nombre) {
+        return tareas.remove(nombre) != null;
+    }
+    public boolean createMail(String email) {
+        if (email == null || email.isEmpty()) return false;
+        mails.add(email);
+        return true;
+    }
+
+    public List<String> getMails() {
+        return new ArrayList<>(mails);
+    }
 }

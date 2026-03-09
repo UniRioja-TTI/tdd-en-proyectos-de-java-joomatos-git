@@ -1,49 +1,40 @@
 package com.tt1.test;
-
-import java.util.Date;
-
 public class ToDo {
     private String nombre;
     private String descripcion;
-    private String fechaLimite; // YYYY-MM-DD
-    private boolean completado;
-
-    public ToDo(){
-
-    }
-
-    public ToDo(String n, String fL){
-        this.nombre = n;
-        this.fechaLimite=fL;
+    private String fecha;
+    private Boolean completado;
+    public ToDo() {}
+    public ToDo(String n, String d, String f){
+        this.nombre=n;
+        this.descripcion=d;
+        this.fecha=f;
         this.completado=false;
-        this.descripcion="";
     }
-
     public String getNombre(){
-        return nombre;
+        return this.nombre;
     }
     public void setNombre(String n){
-        this.nombre = n;
+        this.nombre=n;
     }
-
     public String getDescripcion(){
-        return descripcion;
+        return this.descripcion;
     }
-    public void setDescripcion(String d){
-        this.descripcion = d;
+    public void setDescripcion(String n){
+        this.descripcion=n;
+    }
+    public String getFecha(){
+        return this.fecha;
+    }
+    public void setFecha(String n){
+        this.fecha=n;
     }
 
-    public String getFechaLimite(){
-        return fechaLimite;
+    public void setCompletado(Boolean n){
+        this.completado=n;
     }
-    public void setFechaLimite(String f){
-        this.fechaLimite=f;
+    public Boolean getCompletado(){
+        return this.completado;
     }
 
-    public boolean isCompeltado(){
-        return completado;
-    }
-    public void setCompletado(boolean c){
-        this.completado=c;
-    }
 }

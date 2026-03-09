@@ -1,4 +1,4 @@
-package test;
+package com.tt1.test;
 
 import static org.junit.jupiter.api.Assertions.*;
 
@@ -27,8 +27,12 @@ class TestToDo {
     }
 
     @Test
-    void test() {
-        fail("Not yet implemented");
+    void testSetCompletado() {
+        ToDo td = new ToDo();
+
+        td.setCompletado(true);
+
+        assertEquals(td.getCompletado(), true);
     }
 
 }
