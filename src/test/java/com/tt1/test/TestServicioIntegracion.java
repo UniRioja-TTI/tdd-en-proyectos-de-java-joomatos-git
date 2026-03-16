@@ -11,7 +11,7 @@ class TestServicioIntegracion {
     @BeforeEach
     void setUp() {
         Repositorio repositorio = new Repositorio(new DBStub());
-        MailerStub mailer = new MailerStub("joomatos@unirioja.com", "test1");
+        MailerStub mailer = new MailerStub("mailejemplo@gmail.com", "aaaaa");
         servicio = new Servicio(repositorio, mailer);
     }
 
@@ -20,21 +20,35 @@ class TestServicioIntegracion {
         servicio = null;
     }
 
-    @Test
-    void testFlujoCompletoCrearYListar() {
-        servicio.crearTodo("Tarea1", "2025-08-01");
-        servicio.crearTodo("Tarea2", "2025-08-01");
 
-        List<ToDo> pendientes = servicio.listarPendientes();
-        assertEquals(2, pendientes.size());
+
+    @Test
+    void testCreateComplete() {
+        servicio.createToDo("task1", "2026/16/03");
+        servicio.completeToDo("task1");
+
+        List<ToDo> pendientes = servicio.listPending();
+        assertEquals(0, pendientes.size());
     }
 
     @Test
-    void testFlujoCompletoMarcarCompletada() {
-        servicio.crearTodo("Tarea1", "2025-08-01");
-        servicio.marcarCompletada("Tarea1");
+    void testCreateListpending() {
+        servicio.createToDo("task1", "2026/16/03");
+        servicio.createToDo("task2", "2026/16/03");
 
-        List<ToDo> pendientes = servicio.listarPendientes();
-        assertEquals(0, pendientes.size());
+        List<ToDo> pending = servicio.listPending();
+        assertEquals(2, pending.size());
+    }
+
+    @Test
+    void testCreateCompleteListPending(){
+        servicio.createToDo("taskToBeCompleted","2026/16/03");
+        servicio.createToDo("task1", "2026/16/03");
+        servicio.completeToDo("taskToBeCompleted");
+
+        List<ToDo> pending = servicio.listPending();
+        assertEquals(1, pending.size());
+        assertEquals("task1", pending.get(0).getNombre());
+
     }
 }

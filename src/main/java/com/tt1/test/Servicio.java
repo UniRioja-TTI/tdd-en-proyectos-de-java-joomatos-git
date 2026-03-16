@@ -11,22 +11,32 @@ public class Servicio {
         this.mailer = mailer;
     }
 
-    public boolean crearTodo(String nombre, String fechaLimite) {
-        if (nombre == null || nombre.isEmpty()) return false;
+    public boolean createToDo(String nombre, String fechaLimite) {
+        if (nombre == null) {
+            return false;
+        }
+        if (nombre.isEmpty()){
+            return false;
+        }
         ToDo todo = new ToDo(nombre, "", fechaLimite);
         return repositorio.addToDo(todo);
     }
 
-    public boolean añadirEmail(String email) {
-        if (email == null || !email.contains("@")) return false;
+    public boolean addMail(String email) {
+        if(email==null){
+            return false;
+        }
+        if(!email.contains("@")){
+            return false;
+        }
         return repositorio.addMail(email);
     }
 
-    public boolean marcarCompletada(String nombre) {
+    public boolean completeToDo(String nombre) {
         return repositorio.completeToDo(nombre);
     }
 
-    public List<ToDo> listarPendientes() {
+    public List<ToDo> listPending() {
         return repositorio.getPending();
     }
 }

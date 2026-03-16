@@ -1,55 +1,71 @@
 package com.tt1.test;
 
-import org.junit.jupiter.api.*;
 
 import com.tt1.test.mocks.MailerMock;
 import com.tt1.test.mocks.RepositorioMock;
-
+import org.junit.jupiter.api.*;
 import java.util.List;
 import static org.junit.jupiter.api.Assertions.*;
-
-import org.junit.jupiter.api.AfterEach;
-import org.junit.jupiter.api.BeforeEach;
-import org.junit.jupiter.api.Test;
 
 class TestServicio {
 
     private Servicio servicio;
+    private MailerMock MailerMock;
+    private RepositorioMock RepositorioMock;
 
     @BeforeEach
     void setUp() {
-        servicio = new Servicio(new RepositorioMock(), new MailerMock());
+        MailerMock = new MailerMock();
+        RepositorioMock = new RepositorioMock();
+        servicio = new Servicio(RepositorioMock, MailerMock);
     }
 
     @AfterEach
     void tearDown() {
         servicio = null;
+        MailerMock = null;
+        RepositorioMock = null;
     }
 
     @Test
-    void testCrearTodoDevuelveTrue() {
-        assertTrue(servicio.crearTodo("Limpiar coche", "2026-05-28"));
+    void testCreateToDo() {
+        assertTrue(servicio.createToDo("mailejemplo", "2026/03/16"));
+    }
+
+
+
+    @Test
+    void testNameNull() {
+        servicio.createToDo(null, "2026-10-03");
+        assertFalse(MailerMock.isSent());
     }
 
     @Test
-    void testAñadirEmailDevuelveTrue() {
-        assertTrue(servicio.añadirEmail("jmomatosa@unirioja.es"));
+    void testAddMail() {
+        assertTrue(servicio.addMail("mailejemplo@gmail.com"));
     }
 
     @Test
-    void testMarcarCompletadaDevuelveTrue() {
-        servicio.crearTodo("Limpiar coche", "2026-05-28");
-        assertTrue(servicio.marcarCompletada("Limpiar coche"));
+    void testAddMailInvalido() {
+        assertFalse(servicio.addMail("correo"));
     }
 
     @Test
-    void testListarPendientess() {
-        servicio.crearTodo("Pendiente", "2026-05-28");
-        servicio.crearTodo("Hecha", "2026-04-21");
-        servicio.marcarCompletada("Hecha");
-
-        List<ToDo> pendientes = servicio.listarPendientes();
-        assertEquals(1, pendientes.size());
-        assertEquals("Pendiente", pendientes.getFirst().getNombre());
+    void testCompletar() {
+        servicio.createToDo("task1", "2026/03/16");
+        assertTrue(servicio.completeToDo("task1"));
     }
+
+    @Test
+    void testPendingSoloPending() {
+        servicio.createToDo("pending", "2026/03/16");
+        servicio.createToDo("done", "2026/03/16");
+        servicio.completeToDo("done");
+
+        List<ToDo> pending = servicio.listPending();
+        assertEquals(1, pending.size());
+        assertEquals("pending", pending.get(0).getNombre());
+    }
+
+
 }

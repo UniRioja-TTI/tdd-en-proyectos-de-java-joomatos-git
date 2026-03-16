@@ -8,7 +8,7 @@ public class ToDo {
     public ToDo(String n, String d, String f){
         this.nombre=n;
         this.descripcion=d;
-        this.fecha=f;
+        this.fecha=f; //formato YYYY/MM/DD
         this.completado=false;
     }
     public String getNombre(){
