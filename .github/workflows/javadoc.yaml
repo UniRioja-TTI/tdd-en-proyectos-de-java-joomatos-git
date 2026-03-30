@@ -1,0 +1,36 @@
+name: Generar y Publicar Javadoc
+
+on:
+  push:
+    branches:
+      - stable  
+
+permissions:
+  contents: write  
+
+jobs:
+  build-javadoc:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout del código
+        uses: actions/checkout@v4
+
+      - name: Configurar JDK 21
+        uses: actions/setup-java@v4
+        with:
+          java-version: '21'
+          distribution: 'temurin'
+
+      - name: Generar Javadoc
+        run: |
+          # Creamos el directorio de salida
+          mkdir -p docs-out
+          # Ejecutamos javadoc apuntando a tu paquete
+          javadoc -d docs-out -sourcepath src/main/java -subpackages com.tt1.test
+
+      - name: Desplegar en GitHub Pages
+        uses: JamesIves/github-pages-deploy-action@v4
+        with:
+          folder: docs-out 
+          branch: gh-pages 
